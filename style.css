@@ -3,12 +3,12 @@
 
 /* Scelte comuni: ogni regola usa var() per richiamarne il valore. */
 :root {
-  --colore-primario: #245c49;
-  --colore-primario-scuro: #173f32;
+  --colore-primario: #964007;
+  --colore-primario-scuro: #54270a;
   --colore-sfondo: #f5f2e9;
   --colore-testo: #202923;
-  --font-testo: Arial, Helvetica, sans-serif;
-  --font-titoli: Georgia, "Times New Roman", serif;
+  --font-testo: Verdana, sans-serif;
+  --font-titoli: Palatino, "Book Antiqua", serif;
 }
 
 * {
@@ -197,7 +197,8 @@ h3 {
 }
 
 .event-body {
-  padding: 1.25rem;
+  padding: 1.5rem;
+  
 }
 
 .event-body p:last-child {
