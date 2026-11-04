@@ -4,17 +4,116 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Segnale — Festival di design</title>
+
+  <!-- 1. CSS di Swiper prima del foglio di stile locale -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@14.4.0/swiper-bundle.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+
   <header class="site-header">
     <div class="container">
       <a class="brand" href="index.html">Segnale<span>Festival di design</span></a>
       <nav aria-label="Navigazione principale">
-        <a href="programma.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="programma.html">Programma</a>
         <a href="info-e-luoghi.html" aria-current="page">Info e Luoghi</a>
       </nav>
     </div>
   </header>
+
+  <main id="contenuto" class="container">
+    <section class="intro" aria-labelledby="titolo-home">
+      <p class="eyebrow">12–13 giugno · Torino · Festival immaginario</p>
+      <h1 id="titolo-home">Dove ci troviamo</h1>
+    </section>
+
+    <section class="content-section" aria-labelledby="titolo-sedi">
+      <h2 id="titolo-sedi">Scoprire le sedi</h2>
+
+      <!-- Swiper Container -->
+      <div class="swiper galleria-sedi">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <figure class="slide-sede">
+              <img src="assets/luoghi/sede-centrale.jpg" alt="Sede centrale, Corso Duca degli Abruzzi 24, Torino">
+              <figcaption>
+                <h3>Officina Nord</h3>
+                <p>Sede centrale — Corso Duca degli Abruzzi 24 — Officina Nord nel festival immaginario.</p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="swiper-slide">
+            <figure class="slide-sede">
+              <img src="assets/luoghi/politecnico-valentino.jpg" alt="Facciata del Castello del Valentino">
+              <figcaption>
+                <h3>Spazio Forma</h3>
+                <p>Spazio espositivo dedicato a talk e installazioni sperimentali.</p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="swiper-slide">
+            <figure class="slide-sede">
+              <img src="assets/luoghi/mirafiori.jpg" alt="Cortile e spazi aperti di Mirafiori">
+              <figcaption>
+                <h3>Cortile Comune</h3>
+                <p>Laboratori aperti e workshop collaborativi tra studenti e designer.</p>
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+
+        <!-- Controlli di navigazione -->
+        <button class="swiper-button-prev" type="button" aria-label="Foto precedente"></button>
+        <button class="swiper-button-next" type="button" aria-label="Foto successiva"></button>
+        
+        <!-- Paginazione a pallini (consigliata per l'accessibilità visiva) -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="titolo-arrivare">
+      <h2 id="titolo-arrivare">Come arrivare</h2>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Segnale · Progetto didattico · Festival immaginario</p>
+    </div>
+  </footer>
+
+  <!-- 2. JS di Swiper e inizializzazione a fondo pagina -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@14.4.0/swiper-bundle.min.js"></script>
+  <script>
+    const galleria = new Swiper('.galleria-sedi', {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      loop: true,
+      navigation: {
+        prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1.2,
+          spaceBetween: 24,
+        },
+        1024: {
+          slidesPerView: 2,
+          spaceBetween: 32,
+        }
+      }
+    });
+  </script>
+</body>
+</html>

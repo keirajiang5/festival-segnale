@@ -198,7 +198,6 @@ h3 {
 
 .event-body {
   padding: 1.5rem;
-  
 }
 
 .event-body p:last-child {
@@ -228,6 +227,82 @@ h3 {
 
 .skip-link:focus {
   top: 1rem;
+}
+
+/* ==========================================================================
+   Galleria Swiper — Sedi del festival
+   ========================================================================== */
+
+.galleria-sedi {
+  position: relative;
+  padding-bottom: 3rem; /* Lascia spazio ai pallini di paginazione */
+}
+
+/* Card interna alla slide: adotta lo stile visivo di .event-card */
+.slide-sede {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #b7c0b7;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.slide-sede img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.slide-sede figcaption {
+  padding: 1.5rem;
+}
+
+.slide-sede h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--colore-testo);
+}
+
+.slide-sede p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--colore-testo);
+}
+
+.galleria-sedi .swiper-button-prev,
+.galleria-sedi .swiper-button-next {
+  color: var(--colore-primario);
+  background: rgba(255, 255, 255, 0.9);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid #b7c0b7;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.galleria-sedi .swiper-button-prev:hover,
+.galleria-sedi .swiper-button-next:hover {
+  background: var(--colore-primario);
+  color: #ffffff;
+}
+
+.galleria-sedi .swiper-button-prev::after,
+.galleria-sedi .swiper-button-next::after {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Pallini della paginazione Swiper */
+.galleria-sedi .swiper-pagination-bullet {
+  background: #b7c0b7;
+  opacity: 1;
+}
+
+.galleria-sedi .swiper-pagination-bullet-active {
+  background: var(--colore-primario);
 }
 
 /* Qui aggiungeremo la media query durante la demo. */
