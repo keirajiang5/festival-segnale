@@ -3,10 +3,12 @@
 
 /* Scelte comuni: ogni regola usa var() per richiamarne il valore. */
 :root {
-  --colore-primario: #FF7F00;
-  --colore-primario-scuro: #FE3E00;
-  --colore-sfondo: #CFCFC5;
-  --colore-testo: #012135;
+  --colore-primario: #fb4f8e;
+  --colore-primario-scuro: #a72563;
+  --colore-secondario: #e8e85a;
+  --colore-secondario-scuro: #3dc367;
+  --colore-sfondo: #e9faff;
+  --colore-testo: #4a7fcf;
   --font-testo: "Montserrat", sans-serif;
   --font-titoli: "Cal Sans", sans-serif;
 }
@@ -48,7 +50,7 @@ a:focus-visible {
   top: 0;
   z-index: 1100;
   padding: 0.75rem 0;
-  background: var(--colore-sfondo);
+  background: var(--colore-secondario);
   border-bottom: 4px solid var(--colore-primario);
   box-shadow: 0 2px 8px rgba(32, 41, 35, 0.08);
 }
@@ -92,7 +94,7 @@ nav a[aria-current="page"] {
 
 .eyebrow,
 .event-meta {
-  color: #46564b;
+  color: #3dc367;
   font-size: 0.875rem;
   font-weight: bold;
 }
@@ -132,7 +134,7 @@ h3 {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.75rem 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   background: var(--colore-primario);
   color: #ffffff;
   font-weight: bold;
@@ -193,7 +195,7 @@ h3 {
 .event-card {
   margin-bottom: 1.5rem;
   overflow: hidden;
-  border: 1px solid #b7c0b7;
+  border: 1px solid var(--colore-primario-scuro);
   border-radius: 0.75rem;
   background: #ffffff;
 }
@@ -213,14 +215,14 @@ h3 {
 }
 
 .event-place {
-  color: #46564b;
+  color: var(--colore-primario);
   font-size: 0.875rem;
 }
 
 .site-footer {
   padding: 1.25rem 0;
-  border-top: 1px solid #b7c0b7;
-  color: #46564b;
+  border-top: 1px solid #a72563;
+  color: #a72563;
   font-size: 0.875rem;
 }
 
