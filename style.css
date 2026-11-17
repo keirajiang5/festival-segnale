@@ -3,12 +3,12 @@
 
 /* Scelte comuni: ogni regola usa var() per richiamarne il valore. */
 :root {
-  --colore-primario: #964007;
-  --colore-primario-scuro: #54270a;
-  --colore-sfondo: #f5f2e9;
-  --colore-testo: #202923;
-  --font-testo: Verdana, sans-serif;
-  --font-titoli: Palatino, "Book Antiqua", serif;
+  --colore-primario: #FF7F00;
+  --colore-primario-scuro: #FE3E00;
+  --colore-sfondo: #CFCFC5;
+  --colore-testo: #012135;
+  --font-testo: "Montserrat", sans-serif;
+  --font-titoli: "Cal Sans", sans-serif;
 }
 
 * {
@@ -44,10 +44,14 @@ a:focus-visible {
 }
 
 .site-header {
-  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  padding: 0.75rem 0;
+  background: var(--colore-sfondo);
   border-bottom: 4px solid var(--colore-primario);
+  box-shadow: 0 2px 8px rgba(32, 41, 35, 0.08);
 }
-
 .brand {
   display: inline-block;
   color: var(--colore-testo);
@@ -64,13 +68,17 @@ a:focus-visible {
   font-weight: normal;
 }
 
+/* Navigazione: sotto 600px in colonna */
 nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-top: 1rem;
 }
 
 nav a {
   display: inline-block;
-  margin-right: 1rem;
   padding: 0.25rem 0;
 }
 
@@ -238,7 +246,6 @@ h3 {
   padding-bottom: 3rem; /* Lascia spazio ai pallini di paginazione */
 }
 
-
 .slide-sede {
   margin: 0;
   display: flex;
@@ -348,4 +355,24 @@ h3 {
   border-radius: 0.75rem;
   background: #ffffff;
 }
-/* Qui aggiungeremo la media query durante la demo. */
+
+/* ==========================================================================
+   Navigazione responsive: da 600px in su collegamenti in riga
+   ========================================================================== */
+
+@media (min-width: 600px) {
+  .site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0;
+  }
+}
