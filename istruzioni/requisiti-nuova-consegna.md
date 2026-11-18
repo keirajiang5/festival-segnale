@@ -1,82 +1,70 @@
-# Segnale — Nuova pagina Info e luoghi
+# Segnale — Programma dai dati
 
-Completa il tuo sito Segnale aggiungendo una pagina **Info e luoghi**, con galleria fotografica, mappa e indirizzi.
+Trasforma il Programma del tuo sito Segnale: le schede devono essere generate da due file JSON, con eventi e sedi collegati. In Info e luoghi aggiungi un piccolo riquadro **Meteo a Torino adesso**, con dati letti da un’API pubblica.
 
-## Punto di partenza
+## Da dove partire
 
-Continua dal tuo sito Segnale già completato. Se devi recuperare, usa la versione completa della consegna precedente fornita dal docente. Conserva una versione funzionante prima di iniziare.
+**Se hai svolto la consegna precedente, continua dal tuo sito**, conservando le tue personalizzazioni, e copia da questo pacchetto la cartella `dati/`. Altrimenti usa il sito in questo ZIP come base di recupero: il PDF `progettazione/moodboard.pdf` è un esempio docente, non una moodboard tua.
 
-## Pagina e navigazione
+**Correzione della richiesta precedente:** l’obbligo di cambiare la disposizione del menu fra telefono e desktop è stato tolto: era un errore, perché rendeva la visualizzazione peggiore.
 
-- Aggiungi `info.html`, con un titolo di pagina appropriato e una sola intestazione principale `h1`.
-- Aggiungi la voce Info e luoghi nel menu di Home, Programma e nuova pagina.
-- Mantieni stile e personalizzazioni del tuo sito, usando il CSS condiviso. La nuova pagina deve funzionare alle larghezze di 375, 768 e 1280 px, senza scorrimento orizzontale.
-- Mantieni i sei eventi e i collegamenti precedenti.
+## 1. Completa i due JSON
 
-## Galleria
+I file in `dati/` contengono **una sede e due eventi**. Completali con le altre due sedi e i quattro eventi, presi dal tuo Programma e da Info e luoghi, seguendo i record già presenti. Non è necessario che gli ID siano consecutivi, come mostrano gli eventi forniti con id 1 e 4. Nome e indirizzo della sede stanno solo in `sedi.json`: ogni evento li richiama con `sede_id`.
 
-- Integra Swiper 14.4.0 da CDN, con CSS e JavaScript della stessa versione. La versione usata nell’esempio docente è 14.4.0.
-- Usa le tre fotografie nella cartella `assets/luoghi/`, una per sede, accompagnate da nome e didascalia.
-- Mostra una fotografia alla volta e consenti di raggiungerle tutte con comandi precedente/successivo.
-- Non attivare l’avanzamento automatico.
-- Non è richiesto copiare esattamente l’aspetto o i cambiamenti dei pulsanti dell’esempio docente sotto i 320 px.
+## 2. Descrivi i dati
 
-## Mappa e indirizzi
+Crea `dati/SCHEMA.md` con una breve scheda dati:
 
-- Incorpora la mappa uMap condivisa, partendo dall’iframe fornito: non occorre creare una mappa o un account.
-- Adatta la larghezza al contenitore, mantieni il titolo descrittivo dell’iframe e il collegamento alla vista a schermo intero.
-- Riporta anche fuori dalla mappa i nomi e gli indirizzi delle tre sedi e un collegamento alle indicazioni per ciascuna (puoi usare Google Maps).
+1. Entità: Evento e Sede.
+2. Campi di ciascuna entità, con tipo ed esempio: sono quelli dei due JSON che hai completato.
+3. Chiave primaria di ciascuna entità: `id` numerico, univoco nell’entità e stabile.
+4. Relazione: una sede può ospitare più eventi; ogni evento si svolge in una sede. `Evento.sede_id` fa riferimento a `Sede.id`.
+5. Quantità: sei eventi e tre sedi.
+6. Chi aggiorna i dati e come: modifica dei file nella repository e pubblicazione.
+7. Che cosa mostra la pagina.
 
-  - Sede centrale, Corso Duca degli Abruzzi 24;
-  - Politecnico al Valentino, Viale Mattioli 39;
-  - sede di Mirafiori, Corso Luigi Settembrini 178. Tutte a Torino.
+Nello stesso file, sotto la scheda, aggiungi lo schema Evento–Sede in Mermaid oppure un disegno leggibile.
 
-## Accessibilità e verifiche
+## 3. Genera il Programma
 
-- Titoli ordinati, testi alternativi appropriati per le fotografie e contrasto leggibile fra testo e sfondo. Per il testo normale usa il riferimento di almeno 4,5:1 richiamato a lezione.
-- Verifica il focus e l’uso da tastiera dei comandi della galleria.
-- Apri il sito a 375, 768 e 1280 px; controlla menu, immagini, didascalie, comandi e mappa.
+Fai in modo che `programma.html` carichi i due JSON con `fetch` e costruisca le schede: nell’HTML non devono restare le sei schede scritte a mano. Le schede mostrano le stesse informazioni di prima, con il nome della sede preso da `sedi.json`, e conservano lo stile del tuo sito.
 
-## AI e pubblicazione
+La pagina deve anche mostrare un messaggio mentre carica, quando non ci sono eventi e quando un file non si legge. Un evento con un `sede_id` sbagliato compare comunque, con un testo come «Sede da definire».
 
-Puoi usare un chatbot o lavorare direttamente sul codice. In entrambi i casi verifica il risultato. Conserva una breve traccia delle richieste e dei controlli: non sono richiesti log completi o abbonamenti AI.
+## 4. Meteo a Torino adesso
 
-Aggiorna la stessa repository e GitHub Pages con il percorso già usato, poi controlla la versione pubblica. Non sono richiesti Node.js, npm, compilazione o un numero fisso di commit.
+Un’**API** è un indirizzo che risponde con dati in JSON: si legge con `fetch` come i tuoi file, ma i dati arrivano da un altro sito e cambiano nel tempo. Open-Meteo, citata nella lezione 7, non richiede account né chiave. Apri questo indirizzo nel browser per vedere la risposta:
 
-## Materiali e riferimenti
-
-Le fotografie sono già nello ZIP:
-
-| File | Sede e contenuto della didascalia |
-| --- | --- |
-| `assets/luoghi/sede-centrale.jpg` | Sede centrale — Corso Duca degli Abruzzi 24 — Officina Nord nel festival immaginario. |
-| `assets/luoghi/politecnico-valentino.jpg` | Politecnico al Valentino — Viale Mattioli 39 — Spazio Forma nel festival immaginario. |
-| `assets/luoghi/mirafiori.jpg` | Sede di Mirafiori — Corso Luigi Settembrini 178 — Cortile Comune nel festival immaginario. |
-
-Scrivi testi alternativi appropriati per le fotografie. Puoi rielaborare le didascalie mantenendo corrette le informazioni.
-
-- [Swiper: esempio minimo di integrazione](https://swiperjs.com/get-started). Segui i passaggi relativi a CDN, struttura HTML e inizializzazione; adatta l’esempio al tuo sito.
-- CSS della versione usata: `https://cdn.jsdelivr.net/npm/swiper@14.4.0/swiper-bundle.min.css`.
-- JavaScript della stessa versione: `https://cdn.jsdelivr.net/npm/swiper@14.4.0/swiper-bundle.min.js`.
-
-### Codice della mappa da incorporare
-
-Inserisci questo iframe nella sezione **Come arrivare** di `info.html`. Conserva l’indirizzo completo e il titolo descrittivo; adatta le dimensioni nel CSS condiviso.
-
-```html
-<iframe id="mappa-sedi"
-  title="Mappa delle tre sedi di riferimento per il festival Segnale a Torino"
-  src="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&amp;miniMapControl=false&amp;scrollWheelZoom=false&amp;zoomControl=true&amp;editMode=disabled&amp;moreControl=true&amp;searchControl=null&amp;tilelayersControl=null&amp;embedControl=null&amp;datalayersControl=true&amp;onLoadPanel=none&amp;captionBar=false&amp;captionMenus=true#12/45.0465/7.6528"></iframe>
+```text
+https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,wind_speed_10m&timezone=Europe%2FRome
 ```
 
-Aggiungi sotto la mappa anche il collegamento alla vista a schermo intero:
+In `info.html` aggiungi una sezione **Meteo a Torino adesso**, nello stile del tuo sito, che:
 
-```html
-<a href="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&amp;miniMapControl=false&amp;scrollWheelZoom=true&amp;zoomControl=true&amp;editMode=disabled&amp;moreControl=true&amp;searchControl=null&amp;tilelayersControl=null&amp;embedControl=null&amp;datalayersControl=true&amp;onLoadPanel=none&amp;captionBar=false&amp;captionMenus=true#12/45.0465/7.6528">Visualizza la mappa a schermo intero</a>
-```
+- mostri temperatura, vento e ora del dato;
+- citi la fonte con un collegamento, per esempio «Dati meteo: Open-Meteo, licenza CC BY 4.0»;
+- chiarisca che è il meteo di oggi, non la previsione per le date del festival;
+- se la richiesta non riesce, mostri un messaggio senza bloccare il resto della pagina.
 
-### Fonti delle fotografie fornite
+## 5. Verifica
 
-- Sede centrale: Neq00, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Politecnico_di_Torino,_sede_di_corso_Duca_degli_Abruzzi,_Torino.jpg).
-- Valentino: Simo.Albo80, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Il_cortile_geometrico_del_Valentino.jpg).
-- Mirafiori: [ICIS](https://www.icis.it/wp-content/uploads/2024/10/L2300-CENTRO-DESIGN-anteprima.jpg).
+Apri il sito con Live Preview, non con il doppio clic. Fai queste prove una alla volta, ripristinando ogni volta i file:
+
+- Cambia il nome di una sede in `sedi.json`: cambia nelle schede dei suoi eventi.
+- Metti `[]` in `eventi.json`: compare il messaggio di nessun evento.
+- Rinomina `sedi.json`: compare il messaggio d’errore.
+- Metti un `sede_id` inesistente: l’evento compare con «Sede da definire».
+- Nell’indirizzo del meteo scrivi `temperatura_2m` al posto di `temperature_2m`: compare il messaggio d’errore del meteo, mentre galleria e mappa funzionano.
+
+Controlla anche, a larghezza di telefono e di computer, che il resto del sito funzioni come prima.
+
+## 6. AI e pubblicazione
+
+Puoi usare un chatbot o lavorare sul codice. Fornisci schema e file aggiornati, chiedi una modifica alla volta e verifica il risultato. Non servono abbonamenti AI, Node.js, npm o un database.
+
+Tieni un resoconto del lavoro con l’AI in `progettazione/resoconto-ai.md`: alla fine di ogni sessione aggiungi una sezione `## Sessione N` con un riassunto in pochi punti di come hai usato l’AI: che cosa hai chiesto, che cosa hai usato, modificato o scartato, come hai verificato, quali problemi hai avuto e come li hai risolti. Puoi farlo scrivere allo stesso chatbot con cui hai lavorato, poi rileggilo e correggilo. Non servono le conversazioni complete.
+
+Aggiorna la stessa repository e le stesse GitHub Pages, con la moodboard e le pagine già realizzate. Prima di terminare controlla che i dati siano quelli corretti e verifica la versione pubblica.
+
+La scadenza e la modalità di raccolta saranno comunicate dal docente.
