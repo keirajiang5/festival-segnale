@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Segnale — Festival di design</title>
+  <title>Info e Luoghi — Segnale</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@14.4.0/swiper-bundle.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
       <nav aria-label="Navigazione principale">
         <a href="index.html">Home</a>
         <a href="programma.html">Programma</a>
-        <a href="info-e-luoghi.html" aria-current="page">Info e Luoghi</a>
+        <a href="info.html" aria-current="page">Info e Luoghi</a>
       </nav>
     </div>
   </header>
@@ -111,13 +111,13 @@
 
     <section class="content-section" aria-labelledby="titolo-meteo">
       <h2 id="titolo-meteo">Meteo a Torino adesso</h2>
-      <p class="reading-text">Condizioni meteorologiche rilevate in tempo reale a Torino (non costituiscono una previsione per le date del festival del 12–13 giugno).</p>
+      <p class="reading-text">Rilevazione del meteo di oggi a Torino in tempo reale (non costituisce una previsione per le date del festival del 12–13 giugno).</p>
 
-      <div id="meteo-contenitore" class="reading-text" role="status" aria-live="polite">
+      <div id="meteo-contenitore" class="meteo-box" role="status" aria-live="polite">
         <p>Caricamento dei dati meteo in corso...</p>
       </div>
 
-      <p class="event-meta">
+      <p class="meteo-fonte">
         Dati meteo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>, licenza <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
       </p>
     </section>
@@ -147,7 +147,13 @@
 
     async function caricaMeteoTorino() {
       const contenitore = document.getElementById('meteo-contenitore');
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869¤t=temperature_2m,wind_speed_10m&timezone=Europe%2FRome';
+      const parametri = new URLSearchParams({
+        latitude: '45.0703',
+        longitude: '7.6869',
+        current: 'temperature_2m,wind_speed_10m',
+        timezone: 'Europe/Rome'
+      });
+      const url = `https://api.open-meteo.com/v1/forecast?${parametri}`;
 
       try {
         const risposta = await fetch(url);
@@ -158,16 +164,24 @@
         const dati = await risposta.json();
         const corrente = dati.current;
         const unita = dati.current_units;
-
-        // Estrae l'orario dalla stringa ISO (es. "2026-11-24T15:00" -> "15:00")
         const oraRilevazione = corrente.time.split('T')[1];
 
-        contenitore.innerHTML = '';
-
-        const pDati = document.createElement('p');
-        pDati.innerHTML = `<strong>Temperatura:</strong> ${corrente.temperature_2m} ${unita.temperature_2m} · <strong>Vento:</strong> ${corrente.wind_speed_10m} ${unita.wind_speed_10m} · <strong>Aggiornato alle:</strong> ${oraRilevazione}`;
-
-        contenitore.appendChild(pDati);
+        contenitore.innerHTML = `
+          <ul class="meteo-dati">
+            <li>
+              <span class="meteo-etichetta">Temperatura</span>
+              <span class="meteo-valore">${corrente.temperature_2m} ${unita.temperature_2m}</span>
+            </li>
+            <li>
+              <span class="meteo-etichetta">Vento</span>
+              <span class="meteo-valore">${corrente.wind_speed_10m} ${unita.wind_speed_10m}</span>
+            </li>
+            <li>
+              <span class="meteo-etichetta">Ora del dato</span>
+              <span class="meteo-valore">${oraRilevazione}</span>
+            </li>
+          </ul>
+        `;
       } catch (errore) {
         contenitore.innerHTML = '<p>Al momento non è possibile recuperare i dati meteo in tempo reale. Il resto delle informazioni sul festival resta regolarmente consultabile.</p>';
       }

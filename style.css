@@ -377,4 +377,47 @@ h3 {
     gap: 1.5rem;
     margin-top: 0;
   }
+
+  .meteo-box {
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--colore-primario-scuro);
+  border-radius: 0.75rem;
+  background: #ffffff;
+}
+
+.meteo-box p {
+  margin: 0;
+}
+
+.meteo-dati {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meteo-dati li {
+  display: flex;
+  flex-direction: column;
+}
+
+.meteo-etichetta {
+  color: var(--colore-secondario-scuro);
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.meteo-valore {
+  font-family: var(--font-titoli);
+  font-size: 1.5rem;
+  color: var(--colore-testo);
+}
+
+.meteo-fonte {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
 }
