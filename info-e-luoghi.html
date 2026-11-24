@@ -77,16 +77,15 @@
       </div>
     </section>
 
-  
     <section class="content-section" aria-labelledby="titolo-arrivare">
       <h2 id="titolo-arrivare">Come arrivare</h2>
 
       <div class="mappa-contenitore">
         <iframe id="mappa-sedi"
           title="Mappa delle tre sedi di riferimento per il festival Segnale a Torino"
-          src="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&amp;miniMapControl=false&amp;scrollWheelZoom=false&amp;zoomControl=true&amp;editMode=disabled&amp;moreControl=true&amp;searchControl=null&amp;tilelayersControl=null&amp;embedControl=null&amp;datalayersControl=true&amp;onLoadPanel=none&amp;captionBar=false&amp;captionMenus=true#12/45.0465/7.6528"></iframe>
+          src="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&miniMapControl=false&scrollWheelZoom=false&zoomControl=true&editMode=disabled&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=none&captionBar=false&captionMenus=true#12/45.0465/7.6528"></iframe>
         <p>
-          <a href="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&amp;miniMapControl=false&amp;scrollWheelZoom=true&amp;zoomControl=true&amp;editMode=disabled&amp;moreControl=true&amp;searchControl=null&amp;tilelayersControl=null&amp;embedControl=null&amp;datalayersControl=true&amp;onLoadPanel=none&amp;captionBar=false&amp;captionMenus=true#12/45.0465/7.6528">Visualizza la mappa a schermo intero</a>
+          <a href="https://umap.openstreetmap.fr/it/map/segnale-sedi-del-festival-immaginario_1479665?scaleControl=false&miniMapControl=false&scrollWheelZoom=true&zoomControl=true&editMode=disabled&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=none&captionBar=false&captionMenus=true#12/45.0465/7.6528">Visualizza la mappa a schermo intero</a>
         </p>
       </div>
 
@@ -95,19 +94,32 @@
         <li>
           <strong>Sede centrale</strong>
           <span>Corso Duca degli Abruzzi 24, Torino</span>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Duca+degli+Abruzzi+24,+Torino">Indicazioni per la Sede centrale</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Corso+Duca+degli+Abruzzi+24,+Torino">Indicazioni per la Sede centrale</a>
         </li>
         <li>
           <strong>Politecnico al Valentino</strong>
           <span>Viale Mattioli 39, Torino</span>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Viale+Mattioli+39,+Torino">Indicazioni per il Politecnico al Valentino</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Viale+Mattioli+39,+Torino">Indicazioni per il Politecnico al Valentino</a>
         </li>
         <li>
           <strong>Sede di Mirafiori</strong>
           <span>Corso Luigi Settembrini 178, Torino</span>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Luigi+Settembrini+178,+Torino">Indicazioni per la sede di Mirafiori</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Corso+Luigi+Settembrini+178,+Torino">Indicazioni per la sede di Mirafiori</a>
         </li>
       </ul>
+    </section>
+
+    <section class="content-section" aria-labelledby="titolo-meteo">
+      <h2 id="titolo-meteo">Meteo a Torino adesso</h2>
+      <p class="reading-text">Condizioni meteorologiche rilevate in tempo reale a Torino (non costituiscono una previsione per le date del festival del 12–13 giugno).</p>
+
+      <div id="meteo-contenitore" class="reading-text" role="status" aria-live="polite">
+        <p>Caricamento dei dati meteo in corso...</p>
+      </div>
+
+      <p class="event-meta">
+        Dati meteo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>, licenza <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+      </p>
     </section>
   </main>
 
@@ -130,8 +142,38 @@
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
-        },
+      },
     });
+
+    async function caricaMeteoTorino() {
+      const contenitore = document.getElementById('meteo-contenitore');
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869¤t=temperature_2m,wind_speed_10m&timezone=Europe%2FRome';
+
+      try {
+        const risposta = await fetch(url);
+        if (!risposta.ok) {
+          throw new Error(`Errore HTTP: ${risposta.status}`);
+        }
+
+        const dati = await risposta.json();
+        const corrente = dati.current;
+        const unita = dati.current_units;
+
+        // Estrae l'orario dalla stringa ISO (es. "2026-11-24T15:00" -> "15:00")
+        const oraRilevazione = corrente.time.split('T')[1];
+
+        contenitore.innerHTML = '';
+
+        const pDati = document.createElement('p');
+        pDati.innerHTML = `<strong>Temperatura:</strong> ${corrente.temperature_2m} ${unita.temperature_2m} · <strong>Vento:</strong> ${corrente.wind_speed_10m} ${unita.wind_speed_10m} · <strong>Aggiornato alle:</strong> ${oraRilevazione}`;
+
+        contenitore.appendChild(pDati);
+      } catch (errore) {
+        contenitore.innerHTML = '<p>Al momento non è possibile recuperare i dati meteo in tempo reale. Il resto delle informazioni sul festival resta regolarmente consultabile.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', caricaMeteoTorino);
   </script>
 </body>
 </html>
